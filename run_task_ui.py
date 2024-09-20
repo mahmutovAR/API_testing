@@ -10,9 +10,9 @@ def main():
     # env_data = [f'os_platform = {platform.system()}\n',
     #             f'os_release = {platform.release()}\n',
     #             f'python_version = {platform.python_version()}']
-    env_data = [f'os_platform = OsPlatform\n',
-                f'os_release = OsRelease\n',
-                f'python_version = PythonVersion']
+    env_data = [f'os_platform = MyOsPlatform\n',
+                f'os_release = MyOsRelease\n',
+                f'python_version = MyPythonVersion']
 
     with open(os_path_join('allure-results', 'environment.properties'), 'w') as env_file:
         for line in env_data:
