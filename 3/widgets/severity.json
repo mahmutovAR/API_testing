@@ -1,1 +1,1 @@
-[]
+[{"uid":"e18bafe9036457d1","name":"Sort Customers by First Name","time":{"start":1726868795542,"stop":1726868797683,"duration":2141},"status":"passed","severity":"normal"},{"uid":"1727cfb3aae24110","name":"Add Customer","time":{"start":1726868795535,"stop":1726868798530,"duration":2995},"status":"passed","severity":"normal"},{"uid":"1be89da212bbf346","name":"Delete the first Customer with the name length closest to the average","time":{"start":1726868795548,"stop":1726868797709,"duration":2161},"status":"passed","severity":"normal"}]
