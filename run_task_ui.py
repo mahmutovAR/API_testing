@@ -12,7 +12,8 @@ def main():
     #             f'python_version = {platform.python_version()}']
     env_data = [f'os_platform = My Os Platform\n',
                 f'os_release = My Os Release\n',
-                f'python_version = My Python Version']
+                f'python_version = My Python Version',
+                'test run']
 
     with open(os_path_join('allure-results', 'environment.properties'), 'w') as env_file:
         for line in env_data:
