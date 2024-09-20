@@ -7,9 +7,12 @@ from webbrowser import open as open_report
 def main():
     os_system('pytest tests/ -n 3 --alluredir=allure-results --clean-alluredir')
 
-    env_data = [f'os_platform = {platform.system()}\n',
-                f'os_release = {platform.release()}\n',
-                f'python_version = {platform.python_version()}']
+    # env_data = [f'os_platform = {platform.system()}\n',
+    #             f'os_release = {platform.release()}\n',
+    #             f'python_version = {platform.python_version()}']
+    env_data = [f'os_platform = OsPlatform\n',
+                f'os_release = OsRelease\n',
+                f'python_version = PythonVersion']
 
     with open(os_path_join('allure-results', 'environment.properties'), 'w') as env_file:
         for line in env_data:
