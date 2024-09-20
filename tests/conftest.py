@@ -6,7 +6,8 @@ pytest_plugins = 'tests.fixtures'
 
 @pytest.fixture
 def browser():
-    web_driver = webdriver.Chrome()
-    web_driver.maximize_window()
-    yield web_driver
-    web_driver.quit()
+    pass
+    # web_driver = webdriver.Chrome()
+    # web_driver.maximize_window()
+    # yield web_driver
+    # web_driver.quit()
