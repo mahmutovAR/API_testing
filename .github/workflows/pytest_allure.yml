@@ -1,4 +1,4 @@
-name: Run UI tests and build test report
+name: Run UI tests, generate and publish Allure report on GitHub Pages
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  run_tests_and_generate_report:
+  run_tests_and_generate_publish_report:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout repository
