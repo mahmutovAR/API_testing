@@ -1,4 +1,4 @@
-name: pytest-allure-1
+name: pytest-allure-3
 
 on:
   push:
@@ -22,7 +22,8 @@ jobs:
 
       - name: Run UI tests
 #        run: pytest tests/ -n 3 --alluredir=allure-results --clean-alluredir
-        run: pytest tests/ -n 3 --alluredir=allure-results
+#        run: pytest tests/ -n 3 --alluredir=allure-results
+        run: pytest tests/ -n 3
 
 #      - name: Upload test results
 #        uses: actions/upload-artifact@v4
@@ -69,8 +70,8 @@ jobs:
         if: always()
         with:
           gh_pages: gh-pages
-          allure_history: allure-history/
-          allure_results: allure-results/
+          allure_history: allure-history
+          allure_results: allure-results
 #          allure_report: allure-report
   
   publish_report:
@@ -97,4 +98,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history/
+          publish_dir: allure-history
