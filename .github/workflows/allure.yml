@@ -24,7 +24,7 @@ jobs:
 #        run: pytest tests/ -n 3 --alluredir=allure-results --clean-alluredir
 #        run: pytest tests/ -n 3 --alluredir=allure-results
 #        run: pytest tests/ -n 3
-        run: python pytest -n 3 --alluredir=allure-results
+        run: pytest -n 3 --alluredir=allure-results
 
 #  build_and_publish_report:
 #    needs: run_tests
@@ -32,13 +32,13 @@ jobs:
 #    steps:
 #      - uses: actions/checkout@v4
 
-      - name: Load test report history
-        uses: actions/checkout@v4
-        if: always()
-        continue-on-error: true
-        with:
-          ref: gh-pages
-          path: gh-pages
+#      - name: Load test report history
+#        uses: actions/checkout@v4
+#        if: always()
+#        continue-on-error: true
+#        with:
+#          ref: gh-pages
+#          path: gh-pages
 
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
@@ -46,7 +46,7 @@ jobs:
         with:
           gh_pages: gh-pages
           allure_history: allure-history
-          allure_results: build/allure-results
+          allure_results: ./allure-results
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v3
@@ -54,4 +54,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: allure-history
+#          publish_dir: allure-history
