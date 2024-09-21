@@ -31,9 +31,9 @@ jobs:
 #          name: test_results
 #          path: allure-results/
 #
-      # delete:
-      - name: Display test result files
-        run: ls -R allure-results/
+      # # delete:
+      # - name: Display test result files
+      #   run: ls -R allure-results/
 
   load_history:
     needs: run_tests
