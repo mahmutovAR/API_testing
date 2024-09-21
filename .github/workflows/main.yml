@@ -21,26 +21,13 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Run UI tests
-#        run: pytest tests/ -n 3 --alluredir=allure-results --clean-alluredir
-#        run: pytest tests/ -n 3 --alluredir=allure-results
-        run: pytest tests/ -n 3
+        run: pytest tests/ -n 3 --alluredir=allure-results --clean-alluredir
 
-#      - name: Upload test results
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: test_results
-#          path: allure-results/
-#
-      # # delete:
-      # - name: Display test result files
-      #   run: ls -R allure-results/
-
-  load_history:
-    needs: run_tests
+  build_allure_report:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-
+  
       - name: Load test report history
         uses: actions/checkout@v4
         if: always()
@@ -48,23 +35,7 @@ jobs:
         with:
           ref: gh-pages
           path: gh-pages
-  
-  build_report:
-    needs: [run_tests, load_history]
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
 
-#      - name: Download test results
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: test_results
-##          path: allure-results/
-#
-#      # delete:
-#      - name: Display structure of downloaded files
-#        run: ls -R allure-results/
-        
       - name: Build test report
         uses: simple-elf/allure-report-action@v1.7
         if: always()
@@ -72,28 +43,9 @@ jobs:
           gh_pages: gh-pages
           allure_history: allure-history
           allure_results: allure-results
-#          allure_report: allure-report
-  
-  publish_report:
-    needs: [run_tests, load_history, build_report]
-#    permissions:
-#      id-token: write
-#      pages: write
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
 
-#      - name: Download report
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: test_results
-
-#      # delete:
-#      - name: Display report
-#        run: ls -R allure-report/
-        
       - name: Publish test report
-        uses: peaceiris/actions-gh-pages@v4
+        uses: peaceiris/actions-gh-pages@v3
         if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
