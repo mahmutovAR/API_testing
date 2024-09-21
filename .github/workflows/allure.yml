@@ -45,7 +45,7 @@ jobs:
 #          gh_pages: gh-pages
 #          allure_history: allure-history
 #          allure_results: allure-results
-        uses: simple-elf/allure-report-action@1.9
+        uses: simple-elf/allure-report-action@master
         if: always()
         id: allure-report
         with:
