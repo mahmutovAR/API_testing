@@ -1,4 +1,4 @@
-name: pytest_allure_new
+name: Run UI tests and build test report
 
 on:
   push:
@@ -22,9 +22,9 @@ jobs:
 
       - name: Run UI tests
 #        run: pytest tests/ -n 3 --alluredir=allure-results --clean-alluredir
-        run: pytest tests/ -n 3 --alluredir=allure-results
+        run: pytest tests/ -n 3 --alluredir=test_results
 
-  build_allure_report:
+  build_and_publish_report:
     needs: run_tests
     runs-on: ubuntu-24.04
     steps:
@@ -44,7 +44,7 @@ jobs:
         with:
           gh_pages: gh-pages
           allure_history: allure-history
-          allure_results: allure-results
+          allure_results: test_results
 
       - name: Publish test report
         uses: peaceiris/actions-gh-pages@v4
