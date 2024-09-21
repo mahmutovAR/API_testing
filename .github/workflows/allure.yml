@@ -45,7 +45,7 @@ jobs:
 #          gh_pages: gh-pages
 #          allure_history: allure-history
 #          allure_results: allure-results
-        uses: simple-elf/allure-report-action@master
+        uses: simple-elf/allure-report-action@1.9
         if: always()
         id: allure-report
         with:
@@ -55,15 +55,8 @@ jobs:
           allure_history: allure-history
 
       - name: Publish test report
-#        uses: peaceiris/actions-gh-pages@v4
-#        if: always()
-#        with:
-#          github_token: ${{ secrets.GITHUB_TOKEN }}
-#          publish_branch: gh-pages
-#          publish_dir: allure-history
-
+        uses: peaceiris/actions-gh-pages@v3
         if: always()
-        uses: peaceiris/actions-gh-pages@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
