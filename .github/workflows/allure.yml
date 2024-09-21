@@ -22,8 +22,8 @@ jobs:
 
       - name: Run UI tests
 #        run: pytest tests/ -n 3 --alluredir=allure-results --clean-alluredir
-        run: pytest tests/ -n 3 --alluredir=allure-results
-#        run: pytest tests/ -n 3
+        # run: pytest tests/ -n 3 --alluredir=allure-results
+        run: pytest tests/ -n 3
 
   build_and_publish_report:
     needs: run_tests
