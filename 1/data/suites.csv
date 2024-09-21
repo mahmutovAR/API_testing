@@ -1,0 +1,51 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"passed","Sat Sep 21 22:19:31 GMT 2024","Sat Sep 21 22:19:33 GMT 2024","2157","tests","test_delete_customer","","","","Delete the first Customer with the name length closest to the average","
+    Task: Test Customers delete function
+    
+    SetUp:
+        Open browser
+    
+    Steps:
+        1. Open ""Banking Project"" url
+        2. Open ""Customers"" tab
+        3. Find the first Customer with the name length closest to the average
+        4. Delete found Customer
+        5. Check that the Customer was deleted
+        
+    Expected result:
+        - Customer with a name length close to average was deleted"
+"passed","Sat Sep 21 22:19:31 GMT 2024","Sat Sep 21 22:19:33 GMT 2024","2895","tests","test_add_customer","","","","Add Customer","
+    Task: Test Add Customer Form
+
+    SetUp:
+        - open browser
+
+    Steps:
+         1. Open ""Banking Project"" url
+         2. Open ""Add Customer"" form
+         3. Fill in ""First Name"" field
+         4. Fill in ""Last Name"" field
+         5. Fill in ""Post Code"" field
+         6. Submit data
+         7. Close information window
+         8. Open ""Customers"" tab
+         9. Find and check submitted data
+        10. Delete submitted data
+
+    Expected result:
+        - the new Customer added
+        - data in the Customers table corresponds to the entered"
+"passed","Sat Sep 21 22:19:31 GMT 2024","Sat Sep 21 22:19:33 GMT 2024","2111","tests","test_sort_customers","","","","Sort Customers by First Name","
+    Task: Test sorting Customers by First Name
+    
+    SetUp:
+        Open browser
+    
+    Steps:
+        1. Open ""Banking Project"" url
+        2. Open ""Customers"" tab
+        3. Sort Customers by First Name
+        4. Check that Customers are sorted by First Name
+        
+    Expected result:
+        - customers are sorted be First Name"
