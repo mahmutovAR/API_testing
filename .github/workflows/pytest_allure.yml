@@ -28,6 +28,7 @@ jobs:
         run: git clone https://github.com/sun6r0/test-service.git
 
       - name: Run Docker Compose
+        working-directory: ./test-service
         run: docker compose up --build -d
 
       - name: Run UI tests
