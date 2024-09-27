@@ -1,2 +1,0 @@
-from .add_customer_locators import AddCustomerLocators
-from .customers_locators import CustomersLocators
