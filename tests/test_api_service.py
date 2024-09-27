@@ -21,7 +21,7 @@ from service_api import (StatusCodes, add_entity, get_all_entities,
 
     Expected result:
         - new entity was added""")
-def test_add_entity(service_api: fixture, test_data: fixture, delete_data: fixture):
+def test_add_entity(test_data: fixture, delete_data: fixture):
     data = test_data
     with allure.step('Add entity'):
         add_response = add_entity(data)
@@ -47,7 +47,7 @@ def test_add_entity(service_api: fixture, test_data: fixture, delete_data: fixtu
 
     Expected result:
         - entity was deleted by ID""")
-def test_delete_entity(service_api: fixture, test_data: fixture):
+def test_delete_entity(test_data: fixture):
     with allure.step('Add entity'):
         add_response = add_entity(test_data)
         data_id = add_response.json()
@@ -77,8 +77,7 @@ def test_delete_entity(service_api: fixture, test_data: fixture):
 
     Expected result:
         - entity was retrieved by ID""")
-def test_get_entity(service_api: fixture, test_data: fixture,
-                    entity_object: fixture, delete_data: fixture):
+def test_get_entity(test_data: fixture, entity_object: fixture, delete_data: fixture):
     data = test_data
     with allure.step('Add entity'):
         add_response = add_entity(data)
@@ -113,7 +112,7 @@ def test_get_entity(service_api: fixture, test_data: fixture,
 
     Expected result:
         - all entities were retrieved""")
-def test_get_all_entities(service_api: fixture, test_data: fixture, delete_data: fixture):
+def test_get_all_entities(test_data: fixture, delete_data: fixture):
     data_id = list()
     with allure.step('Add several entities'):
         for _ in range(10):
@@ -148,8 +147,7 @@ def test_get_all_entities(service_api: fixture, test_data: fixture, delete_data:
 
     Expected result:
         - the entity was deleted""")
-def test_patch_entity(service_api: fixture, test_data: fixture,
-                      entity_object: fixture, delete_data: fixture):
+def test_patch_entity(test_data: fixture, entity_object: fixture, delete_data: fixture):
     ini_data = test_data
     with allure.step('Add entity'):
         add_response = add_entity(ini_data)
