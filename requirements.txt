@@ -1,8 +1,6 @@
 allure-pytest==2.13.5
-beautifulsoup4==4.12.3
-pytest==8.3.1
+pydantic==2.9.2
+pytest==8.3.3
 pytest-xdist==3.6.1
+requests==2.32.3
 rstr==3.2.2
-selenium==4.24.0
-lxml==5.2.2
-webdriver-manager==4.0.2

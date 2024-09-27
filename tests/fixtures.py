@@ -1,29 +1,38 @@
+from random import randint
+
 import pytest
-import rstr
-from bs4 import BeautifulSoup
-from selenium import webdriver
+from pydantic import BaseModel
+from rstr import letters
+
+
+class Addition(BaseModel):
+    additional_info: str
+    additional_number: int
+
+
+class Entity(BaseModel):
+    title: str
+    verified: bool
+    addition: Addition
+    important_numbers: list[int]
 
 
 @pytest.fixture
-def form_data():
-    post_code = rstr.digits(10)
-    last_name = rstr.letters(6, 12)
-    first_name = ''
-    for index in range(0, 9, 2):
-        num = int(post_code[index: index + 2])
-        while num > 25:
-            num -= 26
-        first_name += chr(num + 97)
+def test_data():
+    add_info = Addition(additional_info=f'{letters(4, 8).title()} {letters(10)}',
+                        additional_number=randint(1, 100))
 
-    return {'first_name': first_name,
-            'last_name': last_name,
-            'post_code': post_code}
+    imp_num = [randint(1, 100)
+               for _ in range(randint(1, 5))]
+
+    return Entity(title=f'{letters(4, 8).title()} {letters(2, 6)}',
+                  verified=bool(randint(0, 1)),
+                  addition=add_info,
+                  important_numbers=imp_num).model_dump()
 
 
 @pytest.fixture
-def all_customers():
-    def get_data(web_driver: webdriver):
-        html = web_driver.page_source
-        soup_object = BeautifulSoup(html, "lxml")
-        return soup_object.find('table', class_='table').tbody
-    return get_data
+def entity_object():
+    def return_entity(input_data: dict):
+        return Entity.model_validate(input_data)
+    return return_entity

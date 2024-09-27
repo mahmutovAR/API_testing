@@ -1,20 +1,31 @@
 import pytest
-from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.chrome.options import Options
-from webdriver_manager.chrome import ChromeDriverManager
-
+import requests
+from requests.models import Response
+from os import getcwd, chdir
+from os import system as os_system
+from os.path import join as os_path_join
+from service_api import ServiceAPI
+from urllib.parse import urljoin
 
 pytest_plugins = 'tests.fixtures'
 
 
 @pytest.fixture
-def browser():
-    # web_driver = webdriver.Chrome()
-    options = Options()
-    options.add_argument('--headless')
-    web_driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
+def service_api():
+    pass
+    # base_dir = getcwd()
+    # service_api_dir = os_path_join(getcwd(), 'test-service')
+    # chdir(service_api_dir)
+    # os_system('docker compose up --build -d')
+    # chdir(base_dir)
+    yield
+    # chdir(service_api_dir)
+    # os_system('docker compose down')
 
-    web_driver.maximize_window()
-    yield web_driver
-    web_driver.quit()
+
+@pytest.fixture
+def delete_data():
+    def delete_test_data(input_id: int | str):
+        requests.delete(urljoin('http://localhost:8080/api/delete/', str(input_id)))
+    return delete_test_data
+

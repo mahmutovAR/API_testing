@@ -1,20 +1,13 @@
-# SDET2024 UI task
+# SDET2024 API task
 
-Application for testing the **[BankingProject UI](https://www.globalsqa.com/angularJs-protractor/BankingProject/#/manager)**
+Application for testing the **[API Service](https://github.com/sun6r0/test-service)**
 
 ### Testcases
-* **Add Customer**  
-    Generate a 10-digit `Post Code` number  
-    Generate `First Name` based on `Post Code`:
-    - every two digits is a letter number of the alphabet (0 - "a", 1 - "b", etc.)
-    - if the number is greater than 25, then 26 is 0, 27 is 1, etc.
-
-- **Sort Customers by First Name**
-
-* **Delete the Customer with the name length closest to the average**  
-    Determine the average name length  
-    Find `Customer` with the name length closest to the average  
-    Delete this `Customer`
+* **Create a new entity** `POST` `/api/create`
+- **Delete entity** `DELETE` `/api/delete/{id}`
+* **Get a single entity** `GET` `/api/get/{id}`
+- **Get a list of entities** `GET` `/api/getAll`  
+* **Partially update an entity** `PATCH` `/api/patch/{id}`  
 ***
 
 
@@ -29,7 +22,9 @@ python3 -m pip install -r requirements.txt
 ***
 
 
-## Run `run_task_ui.py` to test the BankingProject
+## Run `run_test_service.py` to run the API Service
+
+## Run `run_task_api.py` to test the API Service
 The `pytest-xdist` plugin extends `pytest` to speed up test execution,  
 and `allure-pytest` is used for visualizing the results of a test run.
 
@@ -61,10 +56,10 @@ webbrowser.open('index.html')
 ### Files and directories:
 - `allure-report/index.html` allure report
 - `allure-results/` test results directory  
-**Note:** These directories will be created after running `run_task_ui.py`
+**Note:** These directories will be created after running `run_task_api.py`
 
-* `locators/` locators modules
-* `pages/` web pages modules
+* `service_api/` API settings
+* `test-service/` API Service
 * `tests/` test modules
 * `requirements.txt` required packages
-* `run_task_ui.py` UI testing script
+* `run_task_api.py` API testing script
