@@ -7,7 +7,7 @@ Application for testing the **[API Service](https://github.com/sun6r0/test-servi
 - **Delete entity** `DELETE` `/api/delete/{id}`
 * **Get a single entity** `GET` `/api/get/{id}`
 - **Get a list of entities** `GET` `/api/getAll`  
-* **Partially update an entity** `PATCH` `/api/patch/{id}`  
+* **Patch an entity** `PATCH` `/api/patch/{id}`  
 ***
 
 
