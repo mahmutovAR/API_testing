@@ -3,20 +3,8 @@ from urllib.parse import urljoin
 
 import pytest
 import requests
-from pydantic import BaseModel
+from service_api import Addition, Entity
 from rstr import letters
-
-
-class Addition(BaseModel):
-    additional_info: str
-    additional_number: int
-
-
-class Entity(BaseModel):
-    title: str
-    verified: bool
-    addition: Addition
-    important_numbers: list[int]
 
 
 @pytest.fixture
@@ -43,5 +31,9 @@ def entity_object():
 @pytest.fixture
 def delete_data():
     def delete_test_data(input_id: int | str):
-        requests.delete(urljoin('http://localhost:8080/api/delete/', str(input_id)))
+        try:
+            requests.delete(urljoin('http://localhost:8080/api/delete/', str(input_id)))
+        except Exception as exc:
+            exc.add_note('Test data deletion failed')
+            raise
     return delete_test_data
