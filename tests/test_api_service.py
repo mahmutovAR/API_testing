@@ -25,6 +25,7 @@ API = ServiceAPI()
     Expected result:
         - new entity added""")
 def test_add_entity(test_data: fixture, delete_data: fixture):
+    data_id = None
     try:
         with allure.step('Add entity'):
             add_response = API.add(test_data)
@@ -88,6 +89,7 @@ def test_delete_entity(test_data: fixture):
     Expected result:
         - entity retrieved by ID""")
 def test_get_entity(test_data: fixture, entity_object: fixture, delete_data: fixture):
+    data_id = None
     try:
         data = test_data
         with allure.step('Add entity'):
@@ -167,6 +169,7 @@ def test_get_all_entities(test_data: fixture, delete_data: fixture):
     Expected result:
         - the entity patched""")
 def test_patch_entity(test_data: fixture, entity_object: fixture, delete_data: fixture):
+    data_id = None
     try:
         with allure.step('Add entity'):
             add_response = API.add(test_data)
