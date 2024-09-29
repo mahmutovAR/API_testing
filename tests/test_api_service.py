@@ -1,8 +1,11 @@
+from http import HTTPStatus
+
 import allure
 from pytest import fixture
+from service_api import ServiceAPI
 
-from service_api import (StatusCodes, add_entity, get_all_entities,
-                         get_entity, delete_entity, patch_entity)
+
+API = ServiceAPI()
 
 
 @allure.feature("Service API")
@@ -20,17 +23,19 @@ from service_api import (StatusCodes, add_entity, get_all_entities,
         - delete added entity
 
     Expected result:
-        - new entity was added""")
-def test_add_entity(service_api: fixture, test_data: fixture, delete_data: fixture):
-    data = test_data
-    with allure.step('Add entity'):
-        add_response = add_entity(data)
-        data_id = add_response.json()
+        - new entity added""")
+def test_add_entity(test_data: fixture, delete_data: fixture):
+    data_id = None
+    try:
+        with allure.step('Add entity'):
+            add_response = API.add(test_data)
+            data_id = add_response.json()
 
-    with allure.step('Check status code'):
-        assert add_response.status_code == StatusCodes.create
-
-    delete_data(data_id)
+        with allure.step('Check status code'):
+            assert add_response.status_code == HTTPStatus.OK, (f'Entity not added\n'
+                                                               f'{add_response.request.body}')
+    finally:
+        delete_data(data_id)
 
 
 @allure.feature("Service API")
@@ -46,17 +51,22 @@ def test_add_entity(service_api: fixture, test_data: fixture, delete_data: fixtu
         3. Check status code
 
     Expected result:
-        - entity was deleted by ID""")
-def test_delete_entity(service_api: fixture, test_data: fixture):
-    with allure.step('Add entity'):
-        add_response = add_entity(test_data)
-        data_id = add_response.json()
+        - entity deleted by ID""")
+def test_delete_entity(test_data: fixture, delete_data: fixture):
+    data_id = None
+    try:
+        with allure.step('Add entity'):
+            add_response = API.add(test_data)
+            data_id = add_response.json()
 
-    with allure.step('Delete added entity'):
-        delete_response = delete_entity(data_id)
+        with allure.step('Delete added entity'):
+            delete_response = API.delete(data_id)
 
-    with allure.step('Check status code'):
-        assert delete_response.status_code == StatusCodes.delete
+        with allure.step('Check status code'):
+            assert delete_response.status_code == HTTPStatus.NO_CONTENT, (f'Entity not deleted'
+                                                                          f'\n{add_response.request.body}')
+    finally:
+        delete_data(data_id)
 
 
 @allure.feature("Service API")
@@ -76,24 +86,27 @@ def test_delete_entity(service_api: fixture, test_data: fixture):
         - delete added entity
 
     Expected result:
-        - entity was retrieved by ID""")
-def test_get_entity(service_api: fixture, test_data: fixture,
-                    entity_object: fixture, delete_data: fixture):
-    data = test_data
-    with allure.step('Add entity'):
-        add_response = add_entity(data)
-        data_id = add_response.json()
+        - entity retrieved by ID""")
+def test_get_entity(test_data: fixture, entity_object: fixture, delete_data: fixture):
+    data_id = None
+    try:
+        data = test_data
+        with allure.step('Add entity'):
+            add_response = API.add(data)
+            data_id = add_response.json()
 
-    with allure.step('Get entity by ID'):
-        get_response = get_entity(data_id)
+        with allure.step('Get entity by ID'):
+            get_response = API.get(data_id)
 
-    with allure.step('Get status code'):
-        assert get_response.status_code == StatusCodes.get
+        with allure.step('Get status code'):
+            assert get_response.status_code == HTTPStatus.OK, (f'Entity not retrieved by ID'
+                                                               f'\n{add_response.request.body}')
 
-    with allure.step('Check data'):
-        assert entity_object(get_response.json()) == entity_object(data)
-
-    delete_data(data_id)
+        with allure.step('Check data'):
+            assert entity_object(get_response.json()) == entity_object(data), (f'Entity data does not match'
+                                                                               f'\n{add_response.request.body}')
+    finally:
+        delete_data(data_id)
 
 
 @allure.feature("Service API")
@@ -112,30 +125,32 @@ def test_get_entity(service_api: fixture, test_data: fixture,
         - delete added entities
 
     Expected result:
-        - all entities were retrieved""")
-def test_get_all_entities(service_api: fixture, test_data: fixture, delete_data: fixture):
+        - all entities retrieved""")
+def test_get_all_entities(test_data: fixture, delete_data: fixture):
     data_id = list()
-    with allure.step('Add several entities'):
-        for _ in range(10):
-            add_response = add_entity(test_data)
-            data_id.append(add_response.json())
+    try:
+        with allure.step('Add several entities'):
+            for _ in range(10):
+                add_response = API.add(test_data)
+                data_id.append(add_response.json())
 
-    with allure.step('Get all entities'):
-        get_response = get_all_entities()
+        with allure.step('Get all entities'):
+            get_response = API.get_all()
 
-    with allure.step('Check status code'):
-        assert get_response.status_code == StatusCodes.get_all
-
-    for data_to_delete in data_id:
-        delete_data(data_to_delete)
+        with allure.step('Check status code'):
+            assert get_response.status_code == HTTPStatus.OK, (f'All entities not retrieved'
+                                                               f'\n{add_response.request.body}')
+    finally:
+        for data_to_delete in data_id:
+            delete_data(data_to_delete)
 
 
 @allure.feature("Service API")
 @allure.story("API")
-@allure.title("Partially update an entity")
+@allure.title("Patch an entity")
 @allure.description(
     """
-    Task: Entity deleting test
+    Task: Entity patch test
 
     Steps:
         1. Add entity
@@ -147,22 +162,24 @@ def test_get_all_entities(service_api: fixture, test_data: fixture, delete_data:
         - delete added entity
 
     Expected result:
-        - the entity was deleted""")
-def test_patch_entity(service_api: fixture, test_data: fixture,
-                      entity_object: fixture, delete_data: fixture):
-    ini_data = test_data
-    with allure.step('Add entity'):
-        add_response = add_entity(ini_data)
-        data_id = add_response.json()
+        - the entity patched""")
+def test_patch_entity(test_data: fixture, entity_object: fixture, delete_data: fixture):
+    data_id = None
+    try:
+        with allure.step('Add entity'):
+            add_response = API.add(test_data)
+            data_id = add_response.json()
 
-    with allure.step('Patch added entity'):
-        new_data = test_data
-        patch_response = patch_entity(data_id, new_data)
+        with allure.step('Patch added entity'):
+            new_data = test_data
+            patch_response = API.patch(data_id, new_data)
 
-    with allure.step('Check status code'):
-        assert patch_response.status_code == StatusCodes.patch
+        with allure.step('Check status code'):
+            assert patch_response.status_code == HTTPStatus.NO_CONTENT, (f'Entity not patched\n'
+                                                                         f'{add_response.request.body}')
 
-    with allure.step('Check data'):
-        assert entity_object(get_entity(data_id).json()) == entity_object(new_data)
-
-    delete_data(data_id)
+        with allure.step('Check data'):
+            assert entity_object(API.get(data_id).json()) == entity_object(new_data), (f'Entity data does not match\n'
+                                                                                       f'{add_response.request.body}')
+    finally:
+        delete_data(data_id)

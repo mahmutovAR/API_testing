@@ -7,7 +7,7 @@ Application for testing the **[API Service](https://github.com/sun6r0/test-servi
 - **Delete entity** `DELETE` `/api/delete/{id}`
 * **Get a single entity** `GET` `/api/get/{id}`
 - **Get a list of entities** `GET` `/api/getAll`  
-* **Partially update an entity** `PATCH` `/api/patch/{id}`  
+* **Patch an entity** `PATCH` `/api/patch/{id}`  
 ***
 
 
@@ -22,15 +22,20 @@ python3 -m pip install -r requirements.txt
 ***
 
 
-## Run `run_test_service.py` to run the API Service
+## Run `run_test_service.py` to build the API Service
+```commandline
+docker compose up --build -d
+```
+running in `test-service/`
+***
+
 
 ## Run `run_task_api.py` to test the API Service
-The `pytest-xdist` plugin extends `pytest` to speed up test execution,  
-and `allure-pytest` is used for visualizing the results of a test run.
+The `allure-pytest` is used for visualizing the results of a test run.
 
-### First `pytest` runs 3 test cases in parallel
+### First `pytest` runs test cases
 ```commandline
-pytest tests/ -n 3 --alluredir=allure-results --clean-alluredir
+pytest --alluredir=allure-results --clean-alluredir
 ```
 
 ### Then a file is created with information about the environment (for example)
@@ -63,3 +68,4 @@ webbrowser.open('index.html')
 * `tests/` test modules
 * `requirements.txt` required packages
 * `run_task_api.py` API testing script
+* `run_test_service.py` API Service running script
