@@ -34,8 +34,6 @@ def test_add_entity(test_data: fixture, delete_data: fixture):
         with allure.step('Check status code'):
             assert add_response.status_code == HTTPStatus.OK, (f'Entity not added\n'
                                                                f'{add_response.request.body}')
-    except Exception:
-        raise
     finally:
         delete_data(data_id)
 
@@ -54,7 +52,8 @@ def test_add_entity(test_data: fixture, delete_data: fixture):
 
     Expected result:
         - entity deleted by ID""")
-def test_delete_entity(test_data: fixture):
+def test_delete_entity(test_data: fixture, delete_data: fixture):
+    data_id = None
     try:
         with allure.step('Add entity'):
             add_response = API.add(test_data)
@@ -66,8 +65,8 @@ def test_delete_entity(test_data: fixture):
         with allure.step('Check status code'):
             assert delete_response.status_code == HTTPStatus.NO_CONTENT, (f'Entity not deleted'
                                                                           f'\n{add_response.request.body}')
-    except Exception:
-        raise
+    finally:
+        delete_data(data_id)
 
 
 @allure.feature("Service API")
@@ -106,8 +105,6 @@ def test_get_entity(test_data: fixture, entity_object: fixture, delete_data: fix
         with allure.step('Check data'):
             assert entity_object(get_response.json()) == entity_object(data), (f'Entity data does not match'
                                                                                f'\n{add_response.request.body}')
-    except Exception:
-        raise
     finally:
         delete_data(data_id)
 
@@ -143,8 +140,6 @@ def test_get_all_entities(test_data: fixture, delete_data: fixture):
         with allure.step('Check status code'):
             assert get_response.status_code == HTTPStatus.OK, (f'All entities not retrieved'
                                                                f'\n{add_response.request.body}')
-    except Exception:
-        raise
     finally:
         for data_to_delete in data_id:
             delete_data(data_to_delete)
@@ -186,7 +181,5 @@ def test_patch_entity(test_data: fixture, entity_object: fixture, delete_data: f
         with allure.step('Check data'):
             assert entity_object(API.get(data_id).json()) == entity_object(new_data), (f'Entity data does not match\n'
                                                                                        f'{add_response.request.body}')
-    except Exception:
-        raise
     finally:
         delete_data(data_id)
