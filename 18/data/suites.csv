@@ -1,0 +1,64 @@
+"Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
+"broken","Sun Sep 29 18:13:30 GMT 2024","Sun Sep 29 18:13:30 GMT 2024","2","tests","test_api_service","","","","Get a list of entities","
+    Task: All entities retrieving test
+
+    Steps:
+        1. Add several entities
+        2. Get all entities
+        3. Check status code
+
+    TearDown:
+        - delete added entities
+
+    Expected result:
+        - all entities retrieved"
+"broken","Sun Sep 29 18:13:30 GMT 2024","Sun Sep 29 18:13:30 GMT 2024","2","tests","test_api_service","","","","Patch an entity","
+    Task: Entity patch test
+
+    Steps:
+        1. Add entity
+        2. Patch added entity
+        3. Check status code
+        4. Check data
+
+    TearDown:
+        - delete added entity
+
+    Expected result:
+        - the entity patched"
+"broken","Sun Sep 29 18:13:30 GMT 2024","Sun Sep 29 18:13:30 GMT 2024","3","tests","test_api_service","","","","Get a single entity","
+    Task: Entity retrieval test
+
+    Steps:
+        1. Add entity
+        2. Get entity by ID
+        3. Check status code
+        4. Check data
+
+    TearDown:
+        - delete added entity
+
+    Expected result:
+        - entity retrieved by ID"
+"broken","Sun Sep 29 18:13:30 GMT 2024","Sun Sep 29 18:13:30 GMT 2024","13","tests","test_api_service","","","","Create a new entity","
+    Task: Entity addition test
+
+    Steps:
+        1. Add entity
+        2. Check status code
+        
+    TearDown:
+        - delete added entity
+
+    Expected result:
+        - new entity added"
+"broken","Sun Sep 29 18:13:30 GMT 2024","Sun Sep 29 18:13:30 GMT 2024","2","tests","test_api_service","","","","Delete entity","
+    Task: Entity deletion test
+
+    Steps:
+        1. Add entity
+        2. Delete added entity
+        3. Check status code
+
+    Expected result:
+        - entity deleted by ID"
